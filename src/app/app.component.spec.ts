@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'sito-quick-starter' title`, () => {
+  it(`should have the 'aurora' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('sito-quick-starter');
+    expect(app.title).toEqual('aurora');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, sito-quick-starter');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, aurora');
   });
 });
