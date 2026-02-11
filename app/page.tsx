@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "flowbite-react";
 
 export default function Home() {
@@ -16,40 +16,53 @@ export default function Home() {
   };
 
   return (
-    <div className="font-sans min-h-screen flex items-center justify-center p-8 sm:p-20">
-      <main className="flex flex-col items-center justify-center text-left">
-        <Image
-          src="/Aurora-logo.png"
-          alt="Aurora logo"
-          width={1080}
-          height={300}
-          priority
-        />
+      <main className="container mx-auto px-6 py-12">
+        <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/>
+        <div id='stars'></div>
+        <div id='stars2'></div>
+        <div id='stars3'></div>
+          <section className="aurora-wrapper">
+            <motion.div
+                className="aurora-layer"
+                initial={{opacity: 0.6, scale: 0.95}}
+                animate={{opacity: [0.6, 0.9, 0.6], scale: [0.95, 1.02, 0.95]}}
+                transition={{duration: 6, repeat: Infinity, ease: "easeInOut"}}
+                aria-hidden
+            />
 
-        <div className="max-w-2xl mt-6 space-y-4 text-sm leading-relaxed">
-          <p>
-            What is Humanity? Can you answer? Even in a world in which AIs imitate
-            us so perfectly, while we depend more and more on technology to
-            survive?
-          </p>
+            <div className="hero-content">
+              <div className="hero-text">
+                <h1 id='title' className="text-4xl font-bold mb-4">
+                  Benvenuto al Quick Starter
+                </h1>
+                <p className="text-lg mb-6">
+                  Questo è un esempio di homepage che mostra il logo Aurora con un
+                  effetto &lsquo;aurora-like&rsquo; creato con Framer Motion. Il testo
+                  è allineato a sinistra come richiesto.
+                </p>
 
-          <p>
-            Brought to you by RaiderArts, an independent collective of artists,
-            Aurora: Mankind’s Horizon is a Philosophical Narrative Sci‑Fi TTRPG,
-            about finding an answer to the Human‑Machine Dilemma. We are looking
-            for an Editor to complete and distribute this work, but in the
-            meanwhile. <br/> The Quickstarter is free for everyone.
-          </p>
+                <div>
+                  <Button
+                      onClick={handleDownload}
+                      aria-label="Download the Quickstarter"
+                      color="purple"
+                  >
+                    Download the Quickstarter
+                  </Button>
+                </div>
+              </div>
 
-          <p>Find the A.</p>
-
-          <div className="mt-6">
-            <Button onClick={handleDownload} aria-label="Download the Quickstarter">
-              Download the Quickstarter
-            </Button>
-          </div>
-        </div>
+              <div className="hero-media">
+                <Image
+                    src="/Aurora-logo.png"
+                    alt="Aurora logo"
+                    width={260}
+                    height={260}
+                    className="logo"
+                />
+              </div>
+            </div>
+          </section>
       </main>
-    </div>
-  );
+);
 }
