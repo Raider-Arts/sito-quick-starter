@@ -1,6 +1,11 @@
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 
+@font-face {
+  font-family: 'Azonix';
+  src: url('/Azonix.otf') format('opentype');
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -16,7 +21,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Azonix', Arial, Helvetica, sans-serif;
 }
 
 /* Aurora effect layer */
@@ -44,7 +49,7 @@ body {
 .hero-content {
   position: relative;
   z-index: 10;
-  max-width: 900px;
+  max-width: 1300px;
   width: 100%;
   display: flex;
   gap: 2rem;
@@ -54,6 +59,8 @@ body {
 .hero-text {
   flex: 1 1 50%;
   text-align: left; /* align text to left */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .hero-media {
@@ -61,31 +68,41 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  z-index: 20;
 }
 
 /* Image styling */
 .logo {
-  max-width: 260px;
+  max-width: 350px;
   width: 100%;
   height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* Small responsive adjustments */
 @media (max-width: 640px) {
   .aurora-wrapper { min-height: 50vh; }
   .hero-content { flex-direction: column; gap: 1rem; }
-  .hero-media { order: -1; }
+  .hero-media {
+    order: -1;
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+  }
 }
 
-/* Import delle mixin compatibili Compass (fornite da compass-mixins) */
 @import "compass-mixins/lib/_compass"; // import dal pacchetto in node_modules
 
-// Convertito da SASS indentato a SCSS
 @function multiple-box-shadow($n) {
-  // genera una serie di box-shadow random
-  $value: "#{random(2000)}px #{random(2000)}px #FFF";
+  $value: '#{(random(4000) - 2000)}px #{(random(4000) - 2000)}px #FFF';
   @for $i from 2 through $n {
-    $value: "#{$value}, #{random(2000)}px #{random(2000)}px #FFF";
+    $value: "#{$value} , #{(random(4000) - 2000)}px #{(random(4000) - 2000)}px #FFF";
   }
   @return unquote($value);
 }
@@ -105,7 +122,7 @@ html {
   height: 1px;
   background: transparent;
   box-shadow: $shadows-small;
-  animation: animStar 50s linear infinite;
+  animation: animStar 100s linear infinite;
   position: absolute;
 }
 
@@ -124,7 +141,7 @@ html {
   height: 2px;
   background: transparent;
   box-shadow: $shadows-medium;
-  animation: animStar 100s linear infinite;
+  animation: animStar 200s linear infinite;
   position: absolute;
 }
 
@@ -143,7 +160,7 @@ html {
   height: 3px;
   background: transparent;
   box-shadow: $shadows-big;
-  animation: animStar 150s linear infinite;
+  animation: animStar 300s linear infinite;
   position: absolute;
 }
 
@@ -173,6 +190,69 @@ html {
 }
 
 @keyframes animStar {
-  from { transform: translateY(0px); }
-  to   { transform: translateY(-2000px); }
+  from { transform: translateX(2000px); }
+  to   { transform: translateX(-2000px); }
+}
+
+/* Stili per enfatizzare sezioni e titoli */
+.hero-text .opening-phrase {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #eee;
+  margin-bottom: 2rem;
+  border-left: 4px solid #7c5cff;
+  padding-left: 1rem;
+  line-height: 1.5;
+}
+
+.hero-text .main-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center; /* Centrare il titolo principale per enfasi */
+  font-family: 'Azonix', sans-serif;
+}
+
+.hero-text h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ddd;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #7c5cff;
+  padding-bottom: 0.5rem;
+}
+
+.hero-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+.hero-text a {
+  color: #7c5cff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.hero-text a:hover {
+  text-decoration: underline;
+  color: #9d7cff;
+}
+
+.quickstarter-link {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.quickstarter-link button {
+  //background-color: #7c5cff !important;
+  border: #7c5cff 2px solid !important;
+  color: #cccccc !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
 }
