@@ -77,11 +77,15 @@ body {
 
 /* Image styling */
 .logo {
-  max-width: 350px;
+  max-width: 850csspx;
   width: 100%;
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+.logo-bg {
+  background: rgba(88, 88, 88, 0);
 }
 
 /* Small responsive adjustments */
@@ -107,9 +111,9 @@ body {
   @return unquote($value);
 }
 
-$shadows-small:  multiple-box-shadow(700);
-$shadows-medium: multiple-box-shadow(200);
-$shadows-big:    multiple-box-shadow(100);
+$shadows-small:  multiple-box-shadow(1000);
+$shadows-medium: multiple-box-shadow(300);
+$shadows-big:    multiple-box-shadow(150);
 
 html {
   height: 100%;
