@@ -202,11 +202,25 @@ html {
 .hero-text .opening-phrase {
   font-style: italic;
   font-size: 1.2rem;
-  color: #eee;
+  color: black;
   margin-bottom: 2rem;
   border-left: 4px solid #7c5cff;
   padding-left: 1rem;
   line-height: 1.5;
+  position: relative;
+  top: -450px;
+  left: 10%;
+  width: 45%;
+}
+
+.hero-text .description {
+  color: white;
+  width: 29%;
+  position: relative;
+  top: -300px;
+  left: 5%;
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
 .hero-text .main-title {
@@ -248,9 +262,32 @@ html {
   color: #9d7cff;
 }
 
+.text-quarta-sezione {
+  width: 35%;
+  position: relative;
+  top:-300px;
+  left: 2%;
+  font-size: 1.4rem;
+}
+
+.text-quinta-sezione {
+  width: 35%;
+  position: relative;
+  top: 300px;
+  left: 2%;
+  font-size: 1.4rem;
+}
+
 .quickstarter-link {
   margin: 2rem 0;
   text-align: center;
+  position: relative;
+  top: -300px;
+  left: 11%;
+}
+
+.download-button {
+  background-color: rgb(0, 0, 0, 0.8);
 }
 
 .quickstarter-link button {
