@@ -3,7 +3,7 @@
 import Image from "next/image";
 import {motion, AnimatePresence} from "framer-motion";
 import {Button} from "flowbite-react";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {FaFacebook, FaInstagram} from "react-icons/fa";
 
 export default function Home() {
@@ -25,7 +25,19 @@ export default function Home() {
     };
 
     const backgrounds = ['khorn', 'poven', 'rayhem'];
-    const [currentBg, setCurrentBg] = useState(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
+    const [currentBg, setCurrentBg] = useState('khorn'); // Valore fisso iniziale
+
+    const characters = ['Androide', 'mercenario', 'pilota2', 'sintetico'  ];
+    const [currentChar, setCurrentChar] = useState('Androide'); // Valore fisso iniziale
+
+    const [showPostDescriptions, setShowPostDescriptions] = useState(false);
+    const secondSectionRef = useRef(null);
+
+    useEffect(() => {
+        // Imposta valori casuali solo lato client
+        setCurrentBg(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
+        setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -34,12 +46,42 @@ export default function Home() {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
+        }, 15000);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && !showPostDescriptions) {
+                    setTimeout(() => setShowPostDescriptions(true), 4000);
+                } else if (!entry.isIntersecting && showPostDescriptions) {
+                    setShowPostDescriptions(false);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(handleIntersection, {
+            threshold: 0.1
+        });
+
+        if (secondSectionRef.current) {
+            observer.observe(secondSectionRef.current);
+        }
+
+        return () => {
+            if (secondSectionRef.current) {
+                observer.unobserve(secondSectionRef.current);
+            }
+        };
+    }, [showPostDescriptions]);
+
     return (
         <main className="snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden">
             <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/>
-            {/*<div id='stars'></div>*/}
-            {/*<div id='stars2'></div>*/}
-            {/*<div id='stars3'></div>*/}
             <AnimatePresence mode="wait">
                 <motion.section
                     key={currentBg}
@@ -74,36 +116,42 @@ export default function Home() {
                 </motion.section>
             </AnimatePresence>
             <section
+                ref={secondSectionRef}
                 className="snap-start h-screen flex flex-col items-center justify-center bg-[#0a0a0a] overflow-hidden">
-                <div className="w-full h-full grid grid-cols-2 flex-1">
-                    <div className="flex items-center justify-center">
-                        <Image
-                            src="/arts/characters/Androide.jpg"
-                            alt="Androide character"
-                            width={300}
-                            height={600}
-                            className="h-screen w-auto object-contain"
-                        />
+                <div className="w-full h-full grid grid-cols-2">
+                    <div className="flex items-center justify-center w-full h-full">
+                        <AnimatePresence mode="wait">
+                            <motion.img
+                                key={currentChar}
+                                src={`/arts/characters/${currentChar}.jpg`}
+                                alt={`${currentChar} character`}
+                                className="h-full w-full object-cover"
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                exit={{opacity: 0}}
+                                transition={{duration: 0.5, ease: "easeInOut"}}
+                            />
+                        </AnimatePresence>
                     </div>
-                    <div className="flex items-center justify-center">
-                        <div className="flex-1 hero-text">
-                            <blockquote className="opening-phrase">
+                    <div className="flex items-center justify-center" style={{padding: '10%',}}>
+                        <div className="flex-1 hero-text p-8">
+                            <blockquote className="opening-phrase font-typold">
                                 "Come Definiamo l’umanità quando le intelligenze artificiali ci imitano alla perfezione
                                 mentre noi dipendiamo sempre di più dalla tecnologia per vivere?"
                             </blockquote>
-                            <p className="description">
+                            <p className="description font-typold">
                                 Aurora: Mankind’s Horizon è un gioco di ruolo Sci-Fi il cui tema centrale è il Dilemma
                                 Uomo-Macchina. Crea un eroe da una delle 4 Origini: Umani, Potenziati, Sintetici, ed
                                 Androidi; e vai alla ricerca della risposta al dilemma, tra tremende cospirazioni,
                                 mortali
                                 pericoli, e paesaggi mozzafiato.
                             </p>
-                            <p>
+                            <p className="font-typold post-description" style={{ opacity: showPostDescriptions ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
                                 L’intera opera è ispirata da capolavori come Titanfall, Elysium, Star Citizen, The
                                 Expanse,
                                 Tales From The Loop, ed Armored Core.
                             </p>
-                            <p>
+                            <p className="font-typold post-description" style={{ opacity: showPostDescriptions ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
                                 L’esperienza di gioco prende a piene mani dal design videoludico, implementando alberi
                                 di
                                 abilità, meccaniche per i veicoli, un sistema estremamente modulare per
@@ -111,7 +159,7 @@ export default function Home() {
                                 ma mantenendo una focalizzazione narrativa per la creazione, crescita, ed evoluzione dei
                                 personaggi nella storia.
                             </p>
-                            <p>
+                            <p className="font-typold post-description" style={{ opacity: showPostDescriptions ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
                                 Puoi vedere l'intervista ad un nostro membro qua se vuoi più informazioni: <a
                                 href="https://open.spotify.com/episode/4V849Hr6oGidtoHfgbodZW?si=411720d514034d01"
                                 target="_blank" rel="noopener noreferrer">Spotify</a>
@@ -122,54 +170,12 @@ export default function Home() {
                 <div className="mb-10">
                     <Button
                         onClick={handleScrollToDownload}
-                        className="realative top-[-10vh] scroll-button"
+                        className="realative top-[-10vh] right-[-50vh] scroll-button"
                     >
                         Scarica il quickstarter
                     </Button>
                 </div>
             </section>
-            {/*SECONDA SEZIONE*/}
-            {/*<section className="snap-start min-h-screen flex items-center justify-center"*/}
-            {/*         style={{*/}
-            {/*             backgroundImage: 'url(arts/environments/Vithed.png)',*/}
-            {/*             backgroundSize: 'cover',*/}
-            {/*             backgroundPosition: 'center'*/}
-            {/*         }}>*/}
-            {/*    <div className="container mx-auto px-6">*/}
-            {/*        <div className="flex items-center gap-8">*/}
-
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
-
-            {/*TERZA SEZIONE*/}
-            {/*<section className="snap-start min-h-screen flex items-center justify-center"*/}
-            {/*         style={{*/}
-            {/*             backgroundImage: 'url(arts/environments/Rike.png)',*/}
-            {/*             backgroundSize: 'cover',*/}
-            {/*             backgroundPosition: 'center'*/}
-            {/*         }}>*/}
-            {/*    <div className="container mx-auto px-6">*/}
-            {/*        <div className="flex items-center gap-8">*/}
-            {/*            <div className="flex-1 hero-text">*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
-            {/*QUARTA SEZIONE*/}
-
-            {/*<section*/}
-            {/*    className="snap-start min-h-screen flex items-center justify-center bg-linear-to-b from-[#1B2735] to-[#090A0F] text-white"*/}
-            {/*    style={{*/}
-            {/*        backgroundImage: 'url(arts/environments/Eurea.png)',*/}
-            {/*        backgroundSize: 'cover',*/}
-            {/*        backgroundPosition: 'center'*/}
-            {/*    }}>*/}
-            {/*    <div className="container mx-auto px-6 hero-text ">*/}
-            {/*        */}
-            {/*    </div>*/}
-            {/*</section>*/}
-            {/*QUINTA SEZIONE*/}
             <section
                 className="snap-start min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-[#1B2735] to-[#090A0F] text-white relative"
                 style={{
