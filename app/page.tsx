@@ -133,7 +133,7 @@ export default function Home() {
                             />
                         </AnimatePresence>
                     </div>
-                    <div className="flex items-center justify-center" style={{padding: '10%',}}>
+                    <div className="flex justify-center" style={{padding: '10%',}}>
                         <div className="flex-1 hero-text p-8">
                             <blockquote className="opening-phrase font-typold">
                                 "Come Definiamo l’umanità quando le intelligenze artificiali ci imitano alla perfezione
@@ -159,7 +159,7 @@ export default function Home() {
                                 ma mantenendo una focalizzazione narrativa per la creazione, crescita, ed evoluzione dei
                                 personaggi nella storia.
                             </p>
-                            <p className="font-typold post-description" style={{ opacity: showPostDescriptions ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
+                            <p className="font-typold post-description font-bold" style={{ opacity: showPostDescriptions ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
                                 Puoi vedere l'intervista ad un nostro membro qua se vuoi più informazioni: <a
                                 href="https://open.spotify.com/episode/4V849Hr6oGidtoHfgbodZW?si=411720d514034d01"
                                 target="_blank" rel="noopener noreferrer">Spotify</a>
