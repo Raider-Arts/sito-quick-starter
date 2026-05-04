@@ -1,0 +1,325 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+@font-face {
+  font-family: 'Azonix';
+  src: url('/Azonix.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Typold';
+  src: url('/Typold.ttf') format('truetype');
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  //font-family: 'Azonix', Arial, Helvetica, sans-serif;
+}
+
+/* Aurora effect layer */
+.aurora-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center; /* center image horizontally */
+  align-items: center;
+  min-height: 70vh;
+  overflow: visible;
+}
+
+.aurora-layer {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
+  background: radial-gradient(ellipse at center, rgba(124,92,255,0.35), rgba(124,92,255,0.12) 40%, transparent 70%);
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1300px;
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-text {
+  flex: 1 1 50%;
+  text-align: left; /* align text to left */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.hero-media {
+  flex: 0 0 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+/* Image styling */
+.logo {
+  max-width: 850csspx;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.logo-bg {
+  background: rgba(88, 88, 88, 0);
+}
+
+/* Small responsive adjustments */
+@media (max-width: 640px) {
+  .aurora-wrapper { min-height: 50vh; }
+  .hero-content { flex-direction: column; gap: 1rem; }
+  .hero-media {
+    order: -1;
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+  }
+}
+
+@import "compass-mixins/lib/_compass"; // import dal pacchetto in node_modules
+
+@function multiple-box-shadow($n) {
+  $value: '#{(random(4000) - 2000)}px #{(random(4000) - 2000)}px #FFF';
+  @for $i from 2 through $n {
+    $value: "#{$value} , #{(random(4000) - 2000)}px #{(random(4000) - 2000)}px #FFF";
+  }
+  @return unquote($value);
+}
+
+$shadows-small:  multiple-box-shadow(1000);
+$shadows-medium: multiple-box-shadow(300);
+$shadows-big:    multiple-box-shadow(150);
+
+html {
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  overflow: hidden;
+}
+
+#stars {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: $shadows-small;
+  animation: animStar 100s linear infinite;
+  position: absolute;
+}
+
+#stars:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: $shadows-small;
+}
+
+#stars2 {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: $shadows-medium;
+  animation: animStar 200s linear infinite;
+  position: absolute;
+}
+
+#stars2:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: $shadows-medium;
+}
+
+#stars3 {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: $shadows-big;
+  animation: animStar 300s linear infinite;
+  position: absolute;
+}
+
+#stars3:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: $shadows-big;
+}
+
+#title {
+  color: #FFF;
+  font-family: 'lato', sans-serif;
+  font-weight: 300;
+  letter-spacing: 10px;
+  margin-top: -60px;
+  padding-left: 10px;
+}
+
+#title span {
+  background: -webkit-linear-gradient(white, #38495a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes animStar {
+  from { transform: translateX(2000px); }
+  to   { transform: translateX(-2000px); }
+}
+
+/* Stili per enfatizzare sezioni e titoli */
+.hero-text .opening-phrase {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 2rem;
+  border-left: 4px solid #7c5cff;
+  padding-left: 1rem;
+  line-height: 1.5;
+  width: 80%;
+}
+
+.hero-text .description {
+  color: white;
+  width: 80%;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.hero-text .main-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center; /* Centrare il titolo principale per enfasi */
+  font-family: 'Azonix', sans-serif;
+}
+
+.hero-text h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ddd;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #7c5cff;
+  padding-bottom: 0.5rem;
+}
+
+.hero-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+.hero-text a {
+  color: #7c5cff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.hero-text a:hover {
+  text-decoration: underline;
+  color: #9d7cff;
+}
+
+.quickstarter-link {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.download-button {
+  background-color: rgb(0, 0, 0, 0.8);
+}
+
+.quickstarter-link button {
+  //background-color: #7c5cff !important;
+  border: #7c5cff 2px solid !important;
+  color: #cccccc !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+}
+
+.scroll-button {
+  background-color: rgba(107, 114, 128, 0.6);
+  border: 1px solid white;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 0.375rem;
+}
+
+.scroll-button:hover {
+  background-color: white;
+  color: black;
+}
+
+/* Font classes */
+.font-azonix {
+  font-family: 'Azonix', Arial, Helvetica, sans-serif;
+}
+
+.font-typold {
+  font-family: 'Typold', Arial, Helvetica, sans-serif;
+}
+
+/* Section width classes */
+.section-narrow {
+  padding: 20px;
+  font-size: 1.5rem;
+  max-width: 80%;
+  margin: 0 auto;
+  .title-size {
+    font-size: 2rem;
+  }
+}
+
+.fake-footer {
+  background-color: rgba(107, 114, 128, 0.4);
+}
+
+.post-description {
+  font-size: 1.3rem !important;
+  line-height: 1.6 !important;
+  color: #ccc !important;
+  margin-bottom: 1rem !important;
+}
