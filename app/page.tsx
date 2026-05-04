@@ -262,7 +262,7 @@ function DesktopHome({ content }: HomeProps) {
 }
 
 // Componente Mobile (versione ottimizzata per dispositivi mobili)
-function MobileHome({ content }) {
+function MobileHome({ content }: HomeProps) {
   const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault();
     const link = document.createElement("a");
