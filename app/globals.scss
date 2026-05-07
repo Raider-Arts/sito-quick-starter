@@ -295,21 +295,6 @@ html {
   border-radius: 25px;
 }
 
-.scroll-button {
-  background-color: rgba(107, 114, 128, 0.6);
-  border: 1px solid white;
-  color: white;
-  padding: 1rem 2rem;
-  font-size: 1.125rem;
-  transition: background-color 0.3s, color 0.3s;
-  border-radius: 0.375rem;
-}
-
-.scroll-button:hover {
-  background-color: white;
-  color: black;
-}
-
 /* Font classes */
 .font-azonix {
   font-family: 'Azonix', Arial, Helvetica, sans-serif;
@@ -336,7 +321,6 @@ html {
 }
 
 .post-description {
-  font-size: 1.3rem !important;
   line-height: 1.6 !important;
   color: #ccc !important;
   margin-bottom: 1rem !important;
@@ -458,4 +442,14 @@ html {
 
 .bg-black {
   background-color: var(--background);
+}
+
+button {
+  background: rgb(0, 174, 237, 0.9);
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-family: 'Azonix', Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  /* Ombra: 2px a destra, 4px in basso, 10px di sfocatura */
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.8);
 }

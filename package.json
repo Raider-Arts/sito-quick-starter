@@ -11,7 +11,7 @@
   "dependencies": {
     "compass-mixins": "^0.12.12",
     "flowbite": "^4.0.1",
-    "flowbite-react": "^0.12.10",
+    "flowbite-react": "^0.12.17",
     "framer-motion": "^12.34.0",
     "lottie-react": "^2.4.1",
     "next": "15.4.10",
