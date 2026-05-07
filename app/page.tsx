@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "flowbite-react";
 import { useState, useEffect, useRef } from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
+import logoAnimation from "./logo_anim.json";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 type HomeContent = {
   blockquote: string;
@@ -40,6 +42,13 @@ type HomeProps = {
 
 // Componente Desktop (versione attuale ottimizzata)
 function DesktopHome({ content }: HomeProps) {
+
+  const logoRef = useRef<LottieRefCurrentProps>(null);
+
+  const handleLogoLoaded = () => {
+    logoRef.current?.setSpeed(2); // 2 = double speed
+  };
+
   const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault();
     const link = document.createElement("a");
@@ -111,42 +120,73 @@ function DesktopHome({ content }: HomeProps) {
     };
   }, [showPostDescriptions]);
 
+
+  const [blackBg, setBlackBg] = useState(false);
+  const [fadeSpeed, setFadeSpeed] = useState(4);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setBlackBg(true);
+      setFadeSpeed(0.5);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <main className="snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden">
       <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
-      <AnimatePresence mode="wait">
-        <motion.section
-          key={currentBg}
+      <section className="snap-start min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-black">
+
+        <div className="atmo-bg" />
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentBg}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: fadeSpeed, ease: "easeInOut" }}
+            className="absolute inset-0 z-5 pointer-events-none min-h-screen min-w-screen"
+            style={{
+              backgroundImage: `url('/arts/environments/${currentBg}.png')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        </AnimatePresence>
+
+        {/* Fade to black after 2 seconds */}
+        <motion.div
+          className="absolute inset-0 z-[2] bg-black pointer-events-none min-h-screen min-w-screen"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="snap-start min-h-screen flex flex-col items-center justify-center"
-          style={{
-            backgroundImage: `url(arts/environments/${currentBg}.png)`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}>
-          <div
-            className="relative top-[10vh] pointer-events-none z-10 logo-bg">
-            <Image
-              src="/Aurora-Logo-Mankinds-Horizons_black.png"
-              alt="Aurora logo"
-              width={780}
-              height={780}
-              className="logo"
-            />
-          </div>
-          <div className="mt-auto mb-10">
-            <Button
-              onClick={handleScrollToDownload}
-              className="relative top-[-20vh] scroll-button"
-            >
-              {content.downloadButton}
-            </Button>
-          </div>
-        </motion.section>
-      </AnimatePresence>
+          animate={{ opacity: blackBg ? 1 : 0 }}
+          transition={{ duration: 15, ease: "easeInOut" }}
+        />
+
+        <div className="relative top-[20vh] pointer-events-none z-10 logo-bg">
+          <Lottie
+            lottieRef={logoRef}
+            animationData={logoAnimation}
+            loop={false}
+            autoplay
+            className="logo"
+            onDOMLoaded={handleLogoLoaded}
+            rendererSettings={{
+              preserveAspectRatio: "xMidYMid meet",
+            }}
+          />
+        </div>
+
+        <div className="mt-auto mb-10 relative z-10">
+          <Button
+            onClick={handleScrollToDownload}
+            className="relative top-[-20vh] scroll-button"
+          >
+            {content.downloadButton}
+          </Button>
+        </div>
+      </section>
       <section
         ref={secondSectionRef}
         className="snap-start h-screen flex flex-col items-center justify-center bg-[#0a0a0a] overflow-hidden">
