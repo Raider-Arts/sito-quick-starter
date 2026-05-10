@@ -435,12 +435,24 @@ function DesktopHome({ content }: HomeProps) {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}>
-        <div id="download-section"
+        {/* <div id="download-section"
           className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
           <button
             onClick={handleDownload}
             aria-label="Download the Quickstarter"
             className="scroll-button font-azonix aurora-button"
+          >
+            {content.downloadNowButton} <br /> {content.downloadTitle}
+          </button>
+        </div> */}
+        <div
+          id="download-section"
+          className="absolute top-[20%] sm:top-[26%] md:top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+        >
+          <button
+            onClick={handleDownload}
+            aria-label="Download the Quickstarter"
+            className="scroll-button font-azonix aurora-button text-sm sm:text-base md:text-lg px-5 py-3 sm:px-6 md:px-8"
           >
             {content.downloadNowButton} <br /> {content.downloadTitle}
           </button>
