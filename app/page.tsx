@@ -72,7 +72,7 @@ function DesktopHome({ content }: HomeProps) {
   const [currentBg, setCurrentBg] = useState('khorn');
 
   const characters = ['Androide', 'mercenario', 'pilota2', 'sintetico'];
-  const [currentChar, setCurrentChar] = useState('mercenario');
+  const [currentChar, setCurrentChar] = useState('Androide');
 
   const [showPostDescriptions, setShowPostDescriptions] = useState(false);
   const [showSecondaryDescription, setShowSecondaryDescription] = useState(false);
@@ -80,7 +80,7 @@ function DesktopHome({ content }: HomeProps) {
 
   useEffect(() => {
     setCurrentBg(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
-    // setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
+    setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
   }, []);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ function DesktopHome({ content }: HomeProps) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
+      setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
     }, 15000);
     return () => clearInterval(interval);
   }, []);
