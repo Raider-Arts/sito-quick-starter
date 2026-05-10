@@ -1,5 +1,6 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+// @import "tailwindcss/preflight";
+// @import "tailwindcss/utilities";
+@import "tailwindcss";
 
 @font-face {
   font-family: 'Azonix';
@@ -307,7 +308,8 @@ html {
 /* Section width classes */
 .section-narrow {
   padding: 20px;
-  font-size: 1.5rem;
+  font-size: 0.875rem;
+  // line-height: 1.25rem;
   max-width: 80%;
   margin: 0 auto;
 
@@ -445,13 +447,30 @@ html {
 }
 
 button {
-  background: rgb(0, 174, 237, 0.9);
+  background: rgba(0, 174, 237, 0.9);
   padding: 1rem 2rem;
   border-radius: 25px;
   font-family: 'Azonix', Arial, Helvetica, sans-serif;
   font-size: 1.6rem;
-  /* Ombra: 2px a destra, 4px in basso, 10px di sfocatura */
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.8);
+  transition: background 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+/* Hover effect */
+button:hover {
+  background: rgb(15, 189, 252);
+  /* slightly brighter */
+  transform: scale(1.05);
+  box-shadow: 2px 6px 14px rgba(0, 0, 0, 0.9);
+}
+
+/* Click effect */
+button:active {
+  background: rgb(0, 88, 129);
+  /* darker blue for pressed effect */
+  transform: scale(0.95);
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 .fade-black {

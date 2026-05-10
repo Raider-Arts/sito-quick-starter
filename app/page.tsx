@@ -76,7 +76,8 @@ function DesktopHome({ content }: HomeProps) {
 
   const [showPostDescriptions, setShowPostDescriptions] = useState(false);
   const [showSecondaryDescription, setShowSecondaryDescription] = useState(false);
-  const secondSectionRef = useRef(null);
+  const mainRef = useRef<HTMLElement | null>(null);
+  const secondSectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setCurrentBg(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
@@ -97,33 +98,80 @@ function DesktopHome({ content }: HomeProps) {
     return () => clearInterval(interval);
   }, []);
 
+  // useEffect(() => {
+  //   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting && !showPostDescriptions) {
+  //         setTimeout(() => setShowPostDescriptions(true), 200);
+  //         setTimeout(() => setShowSecondaryDescription(true), 1200);
+  //       } else if (!entry.isIntersecting && showPostDescriptions) {
+  //         setShowPostDescriptions(false);
+  //         setShowSecondaryDescription(false);
+  //       }
+  //     });
+  //   };
+
+  //   const observer = new IntersectionObserver(handleIntersection, {
+  //     threshold: 0.1
+  //   });
+
+  //   if (secondSectionRef.current) {
+  //     observer.observe(secondSectionRef.current);
+  //   }
+
+  //   return () => {
+  //     if (secondSectionRef.current) {
+  //       observer.unobserve(secondSectionRef.current);
+  //     }
+  //   };
+  // }, [showPostDescriptions]);
   useEffect(() => {
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !showPostDescriptions) {
-          setTimeout(() => setShowPostDescriptions(true), 200);
-          setTimeout(() => setShowSecondaryDescription(true), 1200);
-        } else if (!entry.isIntersecting && showPostDescriptions) {
+    const section = secondSectionRef.current;
+    const root = mainRef.current;
+
+    if (!section || !root) return;
+
+    let timer1: ReturnType<typeof setTimeout> | null = null;
+    let timer2: ReturnType<typeof setTimeout> | null = null;
+
+    const clearTimers = () => {
+      if (timer1) clearTimeout(timer1);
+      if (timer2) clearTimeout(timer2);
+      timer1 = null;
+      timer2 = null;
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio >= 0.5) {
+          clearTimers();
+
+          timer1 = setTimeout(() => {
+            setShowPostDescriptions(true);
+          }, 200);
+
+          timer2 = setTimeout(() => {
+            setShowSecondaryDescription(true);
+          }, 1200);
+        } else {
+          clearTimers();
           setShowPostDescriptions(false);
           setShowSecondaryDescription(false);
         }
-      });
-    };
+      },
+      {
+        root,
+        threshold: [0, 0.5, 1],
+      }
+    );
 
-    const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.1
-    });
-
-    if (secondSectionRef.current) {
-      observer.observe(secondSectionRef.current);
-    }
+    observer.observe(section);
 
     return () => {
-      if (secondSectionRef.current) {
-        observer.unobserve(secondSectionRef.current);
-      }
+      clearTimers();
+      observer.disconnect();
     };
-  }, [showPostDescriptions]);
+  }, []);
 
   const [blackBg, setBlackBg] = useState(false);
   const [fadeSpeed, setFadeSpeed] = useState(4);
@@ -138,7 +186,10 @@ function DesktopHome({ content }: HomeProps) {
   }, []);
 
   return (
-    <main className="snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden">
+    <main
+      ref={mainRef}
+      className="snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden"
+    >
       <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
       <section className="snap-start min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-black">
 
@@ -225,72 +276,83 @@ function DesktopHome({ content }: HomeProps) {
           </div>
         </motion.section>
       </AnimatePresence> */}
-      <AnimatePresence mode="wait">
-        <motion.section
-          ref={secondSectionRef}
-          key={currentBg}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="snap-start min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
-          style={{
-            backgroundImage: `url(arts/characters/${currentChar}_blur.jpeg)`,
-            backgroundSize: 'inherit',
-            backgroundPosition: 'left'
-          }}>
+      <div className="snap-start h-screen shrink-0 relative overflow-hidden"
+        ref={secondSectionRef}>
+        <AnimatePresence>
+          <motion.section
+            // ref={secondSectionRef}
+            key={currentBg}
+            className="h-screen w-screen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+            style={{
+              backgroundImage: `url(arts/characters/${currentChar}_blur.jpeg)`,
+              backgroundSize: "auto",
+              backgroundPosition: "left center",
+            }}
+          >
+            <div className="absolute inset-0 grid grid-cols-2 z-10">
+              <div />
 
-          <div className="w-full h-full grid grid-cols-2 relative z-10">
-            <div className="flex items-center justify-center w-full h-full">
-              {/*<AnimatePresence mode="wait">*/}
-              {/*    <motion.img*/}
-              {/*        key={currentChar}*/}
-              {/*        src={`/arts/characters/${currentChar}.jpg`}*/}
-              {/*        alt={`${currentChar} character`}*/}
-              {/*        className="h-full w-full object-cover"*/}
-              {/*        initial={{opacity: 0}}*/}
-              {/*        animate={{opacity: 1}}*/}
-              {/*        exit={{opacity: 0}}*/}
-              {/*        transition={{duration: 0.5, ease: "easeInOut"}}*/}
-              {/*    />*/}
-              {/*</AnimatePresence>*/}
-            </div>
-            <div className="flex justify-center" style={{ padding: '10%' }}>
-              <div className="flex-1 hero-text p-6">
-                <h1 className="font-azonix mb-4"
-                  style={{ fontSize: "3rem", marginBottom: '40px' }}>{content.secondPageTitle}</h1>
-                <blockquote className="opening-phrase font-typold"
-                  style={{
-                    fontSize: "1.6rem",
-                    marginBottom: '40px',
-                    opacity: showPostDescriptions ? 1 : 0,
-                    transition: 'opacity 0.5s ease-in-out',
-                  }}>
-                  {content.blockquote}
-                </blockquote>
-                <p className="font-typold post-description" style={{
-                  opacity: showSecondaryDescription ? 1 : 0,
-                  transition: 'opacity 0.5s ease-in-out',
-                  fontSize: "2.2rem",
-                }}>
-                  {content.secondPageDescription}
-                </p>
+              <div className="flex items-center justify-center p-[10%]">
+                <div className="flex-1 hero-text p-6">
+                  <h1
+                    className="font-azonix mb-4"
+                    style={{
+                      fontSize: "2.25rem",
+                      lineHeight: "1.35",
+                      marginBottom: "32px",
+                    }}
+                  >
+                    {content.secondPageTitle}
+                  </h1>
+
+                  <blockquote
+                    className="opening-phrase font-typold"
+                    style={{
+                      fontSize: "1.25rem",
+                      lineHeight: "1.6",
+                      marginBottom: "32px",
+                      opacity: showPostDescriptions ? 1 : 0,
+                      transition: "opacity 0.5s ease-in-out",
+                    }}
+                  >
+                    {content.blockquote}
+                  </blockquote>
+
+                  <p
+                    className="font-typold post-description"
+                    style={{
+                      opacity: showSecondaryDescription ? 1 : 0,
+                      transition: "opacity 0.5s ease-in-out",
+                      fontSize: "1.6rem",
+                      lineHeight: "1.55",
+                    }}
+                  >
+                    {content.secondPageDescription}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="mb-10 relative z-10">
-            <Button
-              onClick={handleScrollToDownload}
-              className="relative top-[-10vh] right-[-50vh]"
-            >
-              {content.downloadButton}
-            </Button>
-          </div>
-          <div className="fade-black" />
-        </motion.section>
-      </AnimatePresence>
+
+            <div className="absolute bottom-30 left-3/4 -translate-x-3/4 z-20">
+              <Button
+                onClick={handleScrollToDownload}
+                className="cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 text-lg px-8 py-3"
+              >
+                {content.downloadButton}
+              </Button>
+            </div>
+
+            <div className="fade-black" />
+          </motion.section>
+        </AnimatePresence>
+      </div>
+
       <section
-        className="snap-start min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-[#1B2735] to-[#090A0F] text-white relative"
+        // flex flex-col items-center justify-center
+        className="snap-start h-screen bg-linear-to-b from-[#1B2735] to-[#090A0F] text-white relative"
         style={{
           backgroundImage: 'url(arts/characters/the_fight.jpg)',
           backgroundSize: 'cover',
@@ -307,7 +369,7 @@ function DesktopHome({ content }: HomeProps) {
           </Button>
         </div>
         <div
-          className="absolute bottom-0 left-0 right-0 w-full bg-linear-to-t from-black/80 to-transparent pt-12 pb-20 fake-footer relative top-[32vh]">
+          className="w-full bg-linear-to-t from-black/80 to-transparent pt-12 pb-20 fake-footer absolute bottom-0 left-0 right-0">
           <div className="container mx-auto px-6 grid grid-cols-2 gap-8"
             style={{ textShadow: '0 0 10px #000000' }}>
             <div className="flex flex-col items-center justify-center section-narrow ">
