@@ -33,7 +33,8 @@ body {
 .aurora-wrapper {
   position: relative;
   display: flex;
-  justify-content: center; /* center image horizontally */
+  justify-content: center;
+  /* center image horizontally */
   align-items: center;
   min-height: 70vh;
   overflow: visible;
@@ -45,7 +46,7 @@ body {
   height: 60%;
   top: 20%;
   left: 20%;
-  background: radial-gradient(ellipse at center, rgba(124,92,255,0.35), rgba(124,92,255,0.12) 40%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(124, 92, 255, 0.35), rgba(124, 92, 255, 0.12) 40%, transparent 70%);
   filter: blur(80px);
   z-index: 0;
   pointer-events: none;
@@ -63,7 +64,8 @@ body {
 
 .hero-text {
   flex: 1 1 50%;
-  text-align: left; /* align text to left */
+  text-align: left;
+  /* align text to left */
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
@@ -82,7 +84,7 @@ body {
 
 /* Image styling */
 .logo {
-  max-width: 850csspx;
+  max-width: 850px;
   width: 100%;
   height: auto;
   display: block;
@@ -95,8 +97,15 @@ body {
 
 /* Small responsive adjustments */
 @media (max-width: 640px) {
-  .aurora-wrapper { min-height: 50vh; }
-  .hero-content { flex-direction: column; gap: 1rem; }
+  .aurora-wrapper {
+    min-height: 50vh;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   .hero-media {
     order: -1;
     position: static;
@@ -110,15 +119,17 @@ body {
 
 @function multiple-box-shadow($n) {
   $value: '#{(random(4000) - 2000)}px #{(random(4000) - 2000)}px #FFF';
+
   @for $i from 2 through $n {
     $value: "#{$value} , #{(random(4000) - 2000)}px #{(random(4000) - 2000)}px #FFF";
   }
+
   @return unquote($value);
 }
 
-$shadows-small:  multiple-box-shadow(1000);
+$shadows-small: multiple-box-shadow(1000);
 $shadows-medium: multiple-box-shadow(300);
-$shadows-big:    multiple-box-shadow(150);
+$shadows-big: multiple-box-shadow(150);
 
 html {
   height: 100%;
@@ -199,8 +210,13 @@ html {
 }
 
 @keyframes animStar {
-  from { transform: translateX(2000px); }
-  to   { transform: translateX(-2000px); }
+  from {
+    transform: translateX(2000px);
+  }
+
+  to {
+    transform: translateX(-2000px);
+  }
 }
 
 /* Stili per enfatizzare sezioni e titoli */
@@ -229,7 +245,8 @@ html {
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-align: center; /* Centrare il titolo principale per enfasi */
+  text-align: center;
+  /* Centrare il titolo principale per enfasi */
   font-family: 'Azonix', sans-serif;
 }
 
@@ -293,6 +310,7 @@ html {
   font-size: 1.5rem;
   max-width: 80%;
   margin: 0 auto;
+
   .title-size {
     font-size: 2rem;
   }
@@ -306,6 +324,124 @@ html {
   line-height: 1.6 !important;
   color: #ccc !important;
   margin-bottom: 1rem !important;
+}
+
+/* Main atmospheric background */
+.atmo-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  filter: grayscale(1) invert(1) contrast(1.2) brightness(0.85);
+  background:
+    /* sky */
+    linear-gradient(to bottom,
+      #030405 0%,
+      #0a0d11 18%,
+      #141920 38%,
+      #2a3038 56%,
+      #6e747c 72%,
+      #c8ccd1 86%,
+      #f1f2f4 100%);
+
+}
+
+/* Upper atmosphere haze + horizon glow */
+.atmo-bg::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  background:
+    radial-gradient(ellipse at 50% 58%,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.10) 18%,
+      rgba(255, 255, 255, 0.03) 42%,
+      rgba(255, 255, 255, 0) 62%),
+    linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.02) 0%,
+      rgba(255, 255, 255, 0.00) 45%,
+      rgba(255, 255, 255, 0.10) 63%,
+      rgba(255, 255, 255, 0.00) 72%);
+  opacity: 0.9;
+  animation: atmoFloat 28s ease-in-out infinite alternate;
+}
+
+/* Cloud layer */
+.atmo-bg::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -6%;
+  height: 52%;
+  background:
+    radial-gradient(ellipse at 10% 78%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 34%),
+    radial-gradient(ellipse at 26% 82%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 32%),
+    radial-gradient(ellipse at 42% 80%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 34%),
+    radial-gradient(ellipse at 60% 84%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 30%),
+    radial-gradient(ellipse at 76% 79%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 34%),
+    radial-gradient(ellipse at 92% 81%, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0) 30%),
+    linear-gradient(to top,
+      rgba(245, 246, 248, 0.92) 0%,
+      rgba(215, 219, 224, 0.60) 24%,
+      rgba(180, 185, 192, 0.22) 48%,
+      rgba(180, 185, 192, 0.00) 100%);
+  filter: blur(18px);
+  transform: scale(1.08);
+  animation: cloudDrift 42s ease-in-out infinite alternate;
+}
+
+/* Optional subtle grain */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 0.5px, transparent 1px),
+    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.6) 0.5px, transparent 1px),
+    radial-gradient(circle at 35% 75%, rgba(255, 255, 255, 0.7) 0.5px, transparent 1px),
+    radial-gradient(circle at 60% 65%, rgba(255, 255, 255, 0.5) 0.5px, transparent 1px);
+  background-size: 140px 140px, 180px 180px, 160px 160px, 200px 200px;
+  animation: grainShift 18s linear infinite;
+}
+
+@keyframes atmoFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.88;
+  }
+
+  100% {
+    transform: translateY(-8px) scale(1.02);
+    opacity: 1;
+  }
+}
+
+@keyframes cloudDrift {
+  0% {
+    transform: translateX(0) translateY(0) scale(1.08);
+  }
+
+  100% {
+    transform: translateX(-18px) translateY(-6px) scale(1.11);
+  }
+}
+
+@keyframes grainShift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-10px, 6px, 0);
+  }
+}
+
+.bg-black {
+  background-color: var(--background);
 }
 
 button {
