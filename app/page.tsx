@@ -67,8 +67,8 @@ function DesktopHome({content}: HomeProps) {
 
     const [showPostDescriptions, setShowPostDescriptions] = useState(false);
     const [showSecondaryDescription, setShowSecondaryDescription] = useState(false);
-    const secondSectionRef = useRef(null); 
-    
+    const secondSectionRef = useRef(null);
+
 
     useEffect(() => {
         setCurrentBg(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
@@ -153,56 +153,68 @@ function DesktopHome({content}: HomeProps) {
                     </div>
                 </motion.section>
             </AnimatePresence>
-            <section
-                ref={secondSectionRef}
-                className="snap-start h-screen flex flex-col items-center justify-center bg-[#0a0a0a] overflow-hidden">
-                <div className="w-full h-full grid grid-cols-2">
-                    <div className="flex items-center justify-center w-full h-full">
-                        <AnimatePresence mode="wait">
-                            <motion.img
-                                key={currentChar}
-                                src={`/arts/characters/${currentChar}.jpg`}
-                                alt={`${currentChar} character`}
-                                className="h-full w-full object-cover"
-                                initial={{opacity: 0}}
-                                animate={{opacity: 1}}
-                                exit={{opacity: 0}}
-                                transition={{duration: 0.5, ease: "easeInOut"}}
-                            />
-                        </AnimatePresence>
-                    </div>
-                    <div className="flex justify-center" style={{padding: '10%'}}>
-                        <div className="flex-1 hero-text p-6">
-                            <h1 className="font-azonix mb-4"
-                                style={{fontSize: "3rem", marginBottom: '40px'}}>{content.secondPageTitle}</h1>
-                            <blockquote className="opening-phrase font-typold"
-                                        style={{
-                                            fontSize: "1.6rem",
-                                            marginBottom: '40px',
-                                            opacity: showPostDescriptions ? 1 : 0,
-                                            transition: 'opacity 0.5s ease-in-out',
-                                        }}>
-                                {content.blockquote}
-                            </blockquote>
-                            <p className="font-typold post-description" style={{
-                                opacity: showSecondaryDescription ? 1 : 0,
-                                transition: 'opacity 0.5s ease-in-out',
-                                fontSize: "2.2rem",
-                            }}>
-                                {content.secondPageDescription}
-                            </p>
+            <AnimatePresence mode="wait">
+                <motion.section
+                    ref={secondSectionRef}
+                    key={currentBg}
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    exit={{opacity: 0}}
+                    transition={{duration: 0.5, ease: "easeInOut"}}
+                    className="snap-start min-h-screen flex flex-col items-center justify-center"
+                    style={{
+                        backgroundImage: `url(arts/characters/${currentChar}_blur.jpeg)`,
+                        backgroundSize: 'inherit',
+                        backgroundPosition: 'right'
+                    }}>
+                    <div className="w-full h-full grid grid-cols-2">
+                        <div className="flex items-center justify-center w-full h-full">
+                            {/*<AnimatePresence mode="wait">*/}
+                            {/*    <motion.img*/}
+                            {/*        key={currentChar}*/}
+                            {/*        src={`/arts/characters/${currentChar}.jpg`}*/}
+                            {/*        alt={`${currentChar} character`}*/}
+                            {/*        className="h-full w-full object-cover"*/}
+                            {/*        initial={{opacity: 0}}*/}
+                            {/*        animate={{opacity: 1}}*/}
+                            {/*        exit={{opacity: 0}}*/}
+                            {/*        transition={{duration: 0.5, ease: "easeInOut"}}*/}
+                            {/*    />*/}
+                            {/*</AnimatePresence>*/}
+                        </div>
+                        <div className="flex justify-center" style={{padding: '10%'}}>
+                            <div className="flex-1 hero-text p-6">
+                                <h1 className="font-azonix mb-4"
+                                    style={{fontSize: "3rem", marginBottom: '40px'}}>{content.secondPageTitle}</h1>
+                                <blockquote className="opening-phrase font-typold"
+                                            style={{
+                                                fontSize: "1.6rem",
+                                                marginBottom: '40px',
+                                                opacity: showPostDescriptions ? 1 : 0,
+                                                transition: 'opacity 0.5s ease-in-out',
+                                            }}>
+                                    {content.blockquote}
+                                </blockquote>
+                                <p className="font-typold post-description" style={{
+                                    opacity: showSecondaryDescription ? 1 : 0,
+                                    transition: 'opacity 0.5s ease-in-out',
+                                    fontSize: "2.2rem",
+                                }}>
+                                    {content.secondPageDescription}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="mb-10">
-                    <Button
-                        onClick={handleScrollToDownload}
-                        className="relative top-[-18vh] right-[-50vh]"
-                    >
-                        {content.downloadButton}
-                    </Button>
-                </div>
-            </section>
+                    <div className="mb-10">
+                        <Button
+                            onClick={handleScrollToDownload}
+                            className="relative top-[-10vh] right-[-50vh]"
+                        >
+                            {content.downloadButton}
+                        </Button>
+                    </div>
+                </motion.section>
+            </AnimatePresence>
             <section
                 className="snap-start min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-[#1B2735] to-[#090A0F] text-white relative"
                 style={{
@@ -268,215 +280,6 @@ function DesktopHome({content}: HomeProps) {
                                     }}
                                     href={content.spotifyUrl}
                                     target="_blank" rel="noopener noreferrer">QUI</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    );
-}
-
-// Componente Mobile (versione ottimizzata per dispositivi mobili)
-function MobileHome({content}: HomeProps) {
-    const handleDownload = (e: React.MouseEvent) => {
-        e.preventDefault();
-        const link = document.createElement("a");
-        link.href = "/Aurora Mankinds Horizon - Quickstarter.pdf";
-        link.download = "Aurora Mankinds Horizon - Quickstarter.pdf";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    };
-
-    const backgrounds = ['khorn', 'poven', 'rayhem'];
-    const [currentBg, setCurrentBg] = useState('khorn');
-
-    const characters = ['Androide', 'mercenario', 'pilota2', 'sintetico'];
-    const [currentChar, setCurrentChar] = useState('Androide');
-
-    const [showPostDescriptions, setShowPostDescriptions] = useState(false);
-    const [showSecondaryDescription, setShowSecondaryDescription] = useState(false);
-    const secondSectionRef = useRef(null);
-
-    useEffect(() => {
-        setCurrentBg(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
-        setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
-    }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentBg(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
-        }, 15000);
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentChar(characters[Math.floor(Math.random() * characters.length)]);
-        }, 15000);
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting && !showPostDescriptions) {
-                    setTimeout(() => setShowPostDescriptions(true), 4000);
-                    setTimeout(() => setShowSecondaryDescription(true), 5000);
-                } else if (!entry.isIntersecting && showPostDescriptions) {
-                    setShowPostDescriptions(false);
-                    setShowSecondaryDescription(false);
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(handleIntersection, {
-            threshold: 0.1
-        });
-
-        if (secondSectionRef.current) {
-            observer.observe(secondSectionRef.current);
-        }
-
-        return () => {
-            if (secondSectionRef.current) {
-                observer.unobserve(secondSectionRef.current);
-            }
-        };
-    }, [showPostDescriptions]);
-
-    return (
-        <main className="snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden">
-            <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/>
-
-            {/* Sezione 1: Logo e bottone */}
-            <section className="snap-start min-h-screen flex flex-col items-center justify-center relative"
-                     style={{
-                         backgroundImage: `url(arts/environments/${currentBg}.png)`,
-                         backgroundSize: 'cover',
-                         backgroundPosition: 'center'
-                     }}>
-                <div className="absolute inset-0 bg-black/30"></div>
-                <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
-                    <Image
-                        src="/Aurora-Logo-Mankinds-Horizons_black.png"
-                        alt="Aurora logo"
-                        width={300}
-                        height={300}
-                        className="mb-8"
-                    />
-                    <Button
-                        onClick={handleDownload}
-                        className="scroll-button text-sm"
-                    >
-                        {content.downloadButton}
-                    </Button>
-                </div>
-            </section>
-
-            {/* Sezione 2: Personaggio e testo */}
-            <section
-                ref={secondSectionRef}
-                className="snap-start h-screen flex flex-col items-center justify-center bg-[#0a0a0a] overflow-hidden">
-                <div className="w-full h-full grid grid-cols-2">
-                    <div className="flex items-center justify-center w-full h-full">
-                        <AnimatePresence mode="wait">
-                            <motion.img
-                                key={currentChar}
-                                src={`/arts/characters/${currentChar}.jpg`}
-                                alt={`${currentChar} character`}
-                                className="h-full w-full object-cover"
-                                initial={{opacity: 0}}
-                                animate={{opacity: 1}}
-                                exit={{opacity: 0}}
-                                transition={{duration: 0.5, ease: "easeInOut"}}
-                            />
-                        </AnimatePresence>
-                    </div>
-                    <div className="flex justify-center" style={{padding: '10%'}}>
-                        <div className="flex-1 hero-text p-6">
-                            <h1 className="font-azonix mb-4"
-                                style={{fontSize: "3rem", marginBottom: '40px'}}>{content.secondPageTitle}</h1>
-                            <blockquote className="opening-phrase font-typold"
-                                        style={{fontSize: "1.6rem", marginBottom: '40px'}}>
-                                {content.blockquote}
-                            </blockquote>
-                            <p className="font-typold post-description" style={{
-                                opacity: showSecondaryDescription ? 1 : 0,
-                                transition: 'opacity 0.5s ease-in-out',
-                                fontSize: "2.2rem",
-                            }}>
-                                {content.secondPageDescription}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="mb-10">
-                    {/*<Button*/}
-                    {/*    onClick={handleScrollToDownload}*/}
-                    {/*    className="relative top-[-10vh] right-[-50vh]"*/}
-                    {/*>*/}
-                    {/*  {content.downloadButton}*/}
-                    {/*</Button>*/}
-                </div>
-            </section>
-            <section
-                className="snap-start min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-[#1B2735] to-[#090A0F] text-white relative"
-                style={{
-                    backgroundImage: 'url(arts/characters/the_fight.jpg)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                }}>
-                <div id="download-section"
-                     className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                    <Button
-                        onClick={handleDownload}
-                        aria-label="Download the Quickstarter"
-                        className="scroll-button font-azonix"
-                    >
-                        {content.downloadNowButton} <br/> {content.downloadTitle}
-                    </Button>
-                </div>
-                <div
-                    className="absolute bottom-0 left-0 right-0 w-full bg-linear-to-t from-black/80 to-transparent pt-12 pb-20 fake-footer relative top-[32vh]">
-                    <div className="container mx-auto px-6 grid grid-cols-2 gap-8">
-                        <div className="flex flex-col items-center justify-center section-narrow ">
-                            <h2 className="mb-4 font-azonix title-size">{content.aboutTitle}</h2>
-                            <p className="text-left font-typold">{content.aboutText1}</p>
-                            <p className="text-left font-typold">{content.aboutText2}</p>
-                            <p className="text-left font-typold">{content.aboutText3}</p>
-                        </div>
-                        <div className="flex flex-col items-center justify-center section-narrow">
-                            <h3 className="mb-4 font-azonix  title-size">{content.contactTitle}</h3>
-                            <p className="text-center">
-                                {content.emailLabel} <a href={`mailto:${content.email}`} target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-blue-400">{content.email}</a>
-                            </p>
-                            <h3 className="mb-4 font-azonix title-size">{content.socialTitle}</h3>
-                            <p className="text-justify">
-                                <a href={content.facebookUrl}
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   className="inline-block text-xl hover:text-blue-600 transition-colors">
-                                    <FaFacebook/>
-                                </a>
-                                <span>{content.facebookName}</span>
-                            </p>
-                            <p className="text-center">
-                                <a href={content.instagramUrl}
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   className="inline-block text-xl hover:text-pink-500 transition-colors">
-                                    <FaInstagram/>
-                                </a>
-                                <span>{content.instagramName}</span>
-                            </p>
-                            <p className="font-typold font-bold">
-                                {content.spotifyLink} <a
-                                href={content.spotifyUrl}
-                                target="_blank" rel="noopener noreferrer">QUI</a>
                             </p>
                         </div>
                     </div>
