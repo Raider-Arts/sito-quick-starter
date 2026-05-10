@@ -317,3 +317,11 @@ button {
   /* Ombra: 2px a destra, 4px in basso, 10px di sfocatura */
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.8);
 }
+
+.blur-lato-sinistro {
+  /* Supporto per browser basati su Webkit (Chrome, Safari, Edge) */
+  -webkit-mask-image: linear-gradient(to left, black 70%, transparent 100%);
+
+  /* Standard mask-image */
+  mask-image: linear-gradient(to left, black 70%, transparent 100%);
+}

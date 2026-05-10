@@ -42,8 +42,17 @@ type HomeProps = {
 
 // Componente Desktop (versione attuale ottimizzata)
 function DesktopHome({content}: HomeProps) {
-    const handleDownload = (e: React.MouseEvent) => {
+    const handleDownload = async (e: React.MouseEvent) => {
         e.preventDefault();
+
+        try {
+            await fetch("/api/download-notification", {
+                method: "POST",
+            });
+        } catch (error) {
+            console.error("Errore durante l'invio della notifica di download:", error);
+        }
+
         const link = document.createElement("a");
         link.href = "/Aurora Mankinds Horizon - Quickstarter.pdf";
         link.download = "Aurora Mankinds Horizon - Quickstarter.pdf";
@@ -161,7 +170,7 @@ function DesktopHome({content}: HomeProps) {
                     animate={{opacity: 1}}
                     exit={{opacity: 0}}
                     transition={{duration: 0.5, ease: "easeInOut"}}
-                    className="snap-start min-h-screen flex flex-col items-center justify-center"
+                    className="snap-start min-h-screen flex flex-col items-center justify-center blur-lato-sinistro"
                     style={{
                         backgroundImage: `url(arts/characters/${currentChar}_blur.jpeg)`,
                         backgroundSize: 'inherit',
@@ -236,7 +245,7 @@ function DesktopHome({content}: HomeProps) {
                     className="absolute bottom-0 left-0 right-0 w-full bg-linear-to-t from-black/80 to-transparent pt-12 pb-20 fake-footer relative top-[32vh]">
                     <div className="container mx-auto px-6 grid grid-cols-2 gap-8"
                          style={{textShadow: '0 0 10px #000000'}}>
-                        <div className="flex flex-col items-center justify-center section-narrow ">
+                        <div className="flex flex-col justify-center section-narrow ">
                             <h2 className="mb-4 font-azonix title-size">{content.aboutTitle}</h2>
                             <p className="text-left font-typold">{content.aboutText1}</p>
                             <p className="text-left font-typold">{content.aboutText2}</p>
