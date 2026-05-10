@@ -276,7 +276,84 @@ function DesktopHome({ content }: HomeProps) {
           </div>
         </motion.section>
       </AnimatePresence> */}
-      <div className="snap-start h-screen shrink-0 relative overflow-hidden"
+
+      <div
+        className="snap-start min-h-[100svh] lg:h-screen shrink-0 relative overflow-hidden"
+        ref={secondSectionRef}
+      >
+        <AnimatePresence>
+          <motion.section
+            key={currentBg}
+            className="min-h-[100svh] lg:h-screen w-full relative bg-cover bg-left lg:bg-auto lg:bg-left"
+
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+            style={{
+              backgroundImage: `url(arts/characters/${currentChar}_blur.jpeg)`,
+            }}
+          >
+            <div className="absolute inset-0 z-[1] bg-linear-to-r from-black/60 via-black/45 to-black/85 lg:hidden" />
+
+            <div className="absolute inset-0 z-10 grid grid-cols-1 lg:grid-cols-2">
+              <div className="hidden lg:block" />
+
+              <div className="flex items-center justify-center px-5 py-20 sm:px-10 lg:p-[10%]">
+                <div className="hero-text w-full max-w-[620px] rounded-2xl bg-black/35 p-5 text-center backdrop-blur-sm lg:max-w-none lg:bg-transparent lg:p-6 lg:text-left lg:backdrop-blur-0">
+                  <h1
+                    className="font-azonix mb-4"
+                    style={{
+                      fontSize: "clamp(1.6rem, 4.2vw, 2.25rem)",
+                      lineHeight: "1.35",
+                      marginBottom: "clamp(20px, 4vw, 32px)",
+                    }}
+                  >
+                    {content.secondPageTitle}
+                  </h1>
+
+                  <blockquote
+                    className="opening-phrase font-typold mx-auto lg:mx-0"
+                    style={{
+                      fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+                      lineHeight: "1.55",
+                      marginBottom: "clamp(20px, 4vw, 32px)",
+                      opacity: showPostDescriptions ? 1 : 0,
+                      transition: "opacity 0.5s ease-in-out",
+                    }}
+                  >
+                    {content.blockquote}
+                  </blockquote>
+
+                  <p
+                    className="font-typold post-description"
+                    style={{
+                      opacity: showSecondaryDescription ? 1 : 0,
+                      transition: "opacity 0.5s ease-in-out",
+                      fontSize: "clamp(1.05rem, 3vw, 1.6rem)",
+                      lineHeight: "1.5",
+                    }}
+                  >
+                    {content.secondPageDescription}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-[6vh] left-1/2 z-20 -translate-x-1/2 lg:bottom-[10vh] lg:left-3/4 lg:-translate-x-3/4">
+              <button
+                onClick={handleScrollToDownload}
+                className="aurora-button cursor-pointer px-5 py-3 text-sm transition-transform duration-200 ease-in-out hover:scale-105 sm:text-base lg:px-8 lg:text-lg"
+              >
+                {content.downloadButton}
+              </button>
+            </div>
+
+            <div className="fade-black hidden lg:block" />
+          </motion.section>
+        </AnimatePresence>
+      </div>
+
+      {/* <div className="snap-start h-screen shrink-0 relative overflow-hidden"
         ref={secondSectionRef}>
         <AnimatePresence>
           <motion.section
@@ -348,7 +425,7 @@ function DesktopHome({ content }: HomeProps) {
             <div className="fade-black" />
           </motion.section>
         </AnimatePresence>
-      </div>
+      </div> */}
 
       <section
         // flex flex-col items-center justify-center
@@ -368,7 +445,87 @@ function DesktopHome({ content }: HomeProps) {
             {content.downloadNowButton} <br /> {content.downloadTitle}
           </button>
         </div>
-        <div
+        <div className="absolute bottom-0 left-0 right-0 z-20 w-full bg-linear-to-t from-black/90 via-black/60 to-transparent px-4 pt-8 pb-6 md:px-8 md:pt-12 md:pb-10 fake-footer">
+          <div
+            className="container mx-auto flex flex-col gap-6 text-center md:grid md:grid-cols-[1.2fr_0.8fr] md:gap-10 md:text-left"
+            style={{ textShadow: '0 0 10px #000000' }}
+          >
+            <div className="flex flex-col justify-center">
+              <h2 className="mb-3 font-azonix text-xl md:mb-4 md:text-2xl lg:text-3xl">
+                {content.aboutTitle}
+              </h2>
+
+              <div className="space-y-2 font-typold text-xs leading-relaxed sm:text-sm md:text-base">
+                <p>{content.aboutText1}</p>
+                <p>{content.aboutText2}</p>
+                <p>{content.aboutText3}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center gap-3 md:items-start">
+              <h3 className="font-azonix text-lg md:text-xl lg:text-2xl">
+                {content.contactTitle}
+              </h3>
+
+              <p className="font-typold text-xs sm:text-sm md:text-base">
+                {content.emailLabel}
+                <a
+                  href={`mailto:${content.email}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300"
+                >
+                  {content.email}
+                </a>
+              </p>
+
+              <h3 className="mt-1 font-azonix text-lg md:text-xl lg:text-2xl">
+                {content.socialTitle}
+              </h3>
+
+              <div className="flex flex-col items-center gap-2 font-typold text-xs sm:text-sm md:items-start md:text-base">
+                <a
+                  href={content.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-blue-400 transition-colors"
+                >
+                  <FaFacebook className="text-lg md:text-xl" />
+                  <span>{content.facebookName}</span>
+                </a>
+
+                <a
+                  href={content.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-pink-400 transition-colors"
+                >
+                  <FaInstagram className="text-lg md:text-xl" />
+                  <span>{content.instagramName}</span>
+                </a>
+              </div>
+
+              <p className="font-typold text-xs font-bold sm:text-sm md:text-base">
+                {content.spotifyLink}
+                <a
+                  className="font-azonix"
+                  style={{
+                    color: '#01b0ed',
+                    fontWeight: 'bold',
+                    marginLeft: '5px',
+                    textShadow: '0 0 10px #000000'
+                  }}
+                  href={content.spotifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  QUI
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* <div
           className="w-full bg-linear-to-t from-black/80 to-transparent pt-12 pb-20 fake-footer absolute bottom-0 left-0 right-0">
           <div className="container mx-auto px-6 grid grid-cols-2 gap-8"
             style={{ textShadow: '0 0 10px #000000' }}>
@@ -419,7 +576,7 @@ function DesktopHome({ content }: HomeProps) {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
     </main>
   );
