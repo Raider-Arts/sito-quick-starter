@@ -453,3 +453,16 @@ button {
   /* Ombra: 2px a destra, 4px in basso, 10px di sfocatura */
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.8);
 }
+
+.fade-black {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 800px;
+  pointer-events: none;
+  background: linear-gradient(to right,
+      rgba(1, 1, 1, 0) 0%,
+      black 50%);
+}
