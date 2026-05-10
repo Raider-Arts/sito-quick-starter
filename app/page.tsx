@@ -233,13 +233,14 @@ function DesktopHome({ content }: HomeProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="snap-start min-h-screen flex flex-col items-center justify-center"
+          className="snap-start min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
           style={{
             backgroundImage: `url(arts/characters/${currentChar}_blur.jpeg)`,
             backgroundSize: 'inherit',
-            backgroundPosition: 'right'
+            backgroundPosition: 'left'
           }}>
-          <div className="w-full h-full grid grid-cols-2">
+
+          <div className="w-full h-full grid grid-cols-2 relative z-10">
             <div className="flex items-center justify-center w-full h-full">
               {/*<AnimatePresence mode="wait">*/}
               {/*    <motion.img*/}
@@ -277,7 +278,7 @@ function DesktopHome({ content }: HomeProps) {
               </div>
             </div>
           </div>
-          <div className="mb-10">
+          <div className="mb-10 relative z-10">
             <Button
               onClick={handleScrollToDownload}
               className="relative top-[-10vh] right-[-50vh]"
@@ -285,6 +286,7 @@ function DesktopHome({ content }: HomeProps) {
               {content.downloadButton}
             </Button>
           </div>
+          <div className="fade-black" />
         </motion.section>
       </AnimatePresence>
       <section
