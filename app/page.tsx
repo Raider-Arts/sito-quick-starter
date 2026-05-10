@@ -234,12 +234,12 @@ function DesktopHome({ content }: HomeProps) {
         </div>
 
         <div className="mt-auto mb-10 relative z-10">
-          <Button
+          <button
             onClick={handleScrollToDownload}
-            className="relative top-[-20vh] scroll-button"
+            className="relative top-[-20vh] scroll-button aurora-button"
           >
             {content.downloadButton}
-          </Button>
+          </button>
         </div>
       </section>
 
@@ -337,12 +337,12 @@ function DesktopHome({ content }: HomeProps) {
             </div>
 
             <div className="absolute bottom-30 left-3/4 -translate-x-3/4 z-20">
-              <Button
+              <button
                 onClick={handleScrollToDownload}
-                className="cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 text-lg px-8 py-3"
+                className="cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 text-lg px-8 py-3 aurora-button"
               >
                 {content.downloadButton}
-              </Button>
+              </button>
             </div>
 
             <div className="fade-black" />
@@ -360,13 +360,13 @@ function DesktopHome({ content }: HomeProps) {
         }}>
         <div id="download-section"
           className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-          <Button
+          <button
             onClick={handleDownload}
             aria-label="Download the Quickstarter"
-            className="scroll-button font-azonix"
+            className="scroll-button font-azonix aurora-button"
           >
             {content.downloadNowButton} <br /> {content.downloadTitle}
-          </Button>
+          </button>
         </div>
         <div
           className="w-full bg-linear-to-t from-black/80 to-transparent pt-12 pb-20 fake-footer absolute bottom-0 left-0 right-0">
