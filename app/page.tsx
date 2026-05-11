@@ -336,7 +336,7 @@ function DesktopHome({ content }: HomeProps) {
               </div>
             </div>
 
-            <div className="absolute bottom-30 left-3/4 -translate-x-3/4 z-20">
+            <div className="absolute bottom-30 top-[10vh] left-3/4 -translate-x-3/4 z-20">
               <button
                 onClick={handleScrollToDownload}
                 className="cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 text-lg px-8 py-3 aurora-button"
@@ -372,8 +372,8 @@ function DesktopHome({ content }: HomeProps) {
           className="w-full bg-linear-to-t from-black/80 to-transparent pt-12 pb-20 fake-footer absolute bottom-0 left-0 right-0">
           <div className="container mx-auto px-6 grid grid-cols-2 gap-8"
             style={{ textShadow: '0 0 10px #000000' }}>
-            <div className="flex flex-col items-center justify-center section-narrow ">
-              <h2 className="mb-4 font-azonix title-size">{content.aboutTitle}</h2>
+            <div className="flex flex-col justify-center section-narrow ">
+              <h2 className="ml-8 mb-4 font-azonix title-size">{content.aboutTitle}</h2>
               <p className="text-left font-typold">{content.aboutText1}</p>
               <p className="text-left font-typold">{content.aboutText2}</p>
               <p className="text-left font-typold">{content.aboutText3}</p>
