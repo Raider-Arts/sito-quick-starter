@@ -53,8 +53,9 @@ function DesktopHome({ content }: HomeProps) {
 
   const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault();
+
     const link = document.createElement("a");
-    link.href = "/Aurora Mankinds Horizon - Quickstarter.pdf";
+    link.href = "/api/download/quickstarter";
     link.download = "Aurora Mankinds Horizon - Quickstarter.pdf";
     document.body.appendChild(link);
     link.click();
